@@ -1,0 +1,49 @@
+---
+const nav = [
+  { name: "Trajectories", href: "/trajectories" },
+  { name: "Documentation", href: "/documentation" },
+  { name: "SitMonitor™", href: "/sitmonitor" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" }
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>theitserver.org</title>
+
+    <link rel="stylesheet" href="/styles/base.css" />
+    <link rel="stylesheet" href="/styles/mobile.css" />
+    <link rel="stylesheet" href="/styles/tablet.css" />
+    <link rel="stylesheet" href="/styles/desktop.css" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="/">theitserver.org</a>
+
+        <nav class="nav" aria-label="Main Navigation">
+          <ul>
+            {nav.map((item) => (
+              <li><a href={item.href}>{item.name}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© {new Date().getFullYear()} theitserver.org — All Rights Reserved.</p>
+      </div>
+    </footer>
+    <slot name="scripts" />
+  </body>
+</html>

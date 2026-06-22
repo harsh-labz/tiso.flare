@@ -1,0 +1,244 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Contact — theitserver.org">
+  <section class="contact-container">
+
+    <!-- STEP 1 -->
+    <div id="step1">
+      <h2>Basic Information</h2>
+      <p>We need a few details to begin.</p>
+
+      <div class="mb-3">
+        <label class="form-label">Work Email</label>
+        <input type="email" id="email" class="form-control" required>
+        <div id="emailError" class="error d-none">A valid work email is required.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Country / Region</label>
+        <select id="country" class="form-select"></select>
+      </div>
+
+      <button class="btn btn-dark" onclick="validateStep1()">Continue</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" class="d-none">
+      <h2>Your Details</h2>
+      <p>Tell us more so we can understand your needs.</p>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">First Name</label>
+          <input type="text" id="fname" class="form-control" required>
+          <div id="fnameError" class="error d-none">First name is required.</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Last Name</label>
+          <input type="text" id="lname" class="form-control" required>
+          <div id="lnameError" class="error d-none">Last name is required.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Message</label>
+        <textarea id="message" class="form-control" rows="4" required></textarea>
+        <div id="messageError" class="error d-none">Message is required.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Anything else? <span class="text-muted">(Optional)</span></label>
+        <textarea 
+          id="extra" 
+          class="form-control" 
+          rows="4"
+          placeholder="Tell us more about your coverage universe, AUM exposure to tech, and data consumption needs."
+        ></textarea>
+      </div>
+
+      <button class="btn btn-dark" onclick="validateStep2()">Submit</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="step3" class="d-none">
+      <h2>Thank You</h2>
+      <p>We’ll get back to you soon.</p>
+
+      <p class="mt-4 text-muted small">
+        Please fill out this form, and we'll reach out to you if we're able to support you.  
+        If not, we'll be in touch when we're ready to open up access more broadly soon.
+      </p>
+
+      <p class="text-muted small">
+        You may receive marketing communications including product updates, industry news and events.  
+        You can <a href="#" class="text-decoration-underline">unsubscribe</a> at any time.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ⭐ SCRIPT GOES INTO NAMED SLOT -->
+  <Fragment slot="scripts">
+    <script is:client>
+      window.addEventListener("DOMContentLoaded", () => {
+
+        const nextStep = (step) => {
+          const current = document.getElementById(`step${step}`);
+          const next = document.getElementById(`step${step + 1}`);
+          if (current) current.classList.add("d-none");
+          if (next) next.classList.remove("d-none");
+        };
+
+        const validateStep1 = () => {
+          const emailInput = document.getElementById("email");
+          const emailError = document.getElementById("emailError");
+          if (!emailInput || !emailError) return;
+
+          const email = emailInput.value.trim();
+          const workEmailPattern = /^[^@]+@[^@]+\.[^@]+$/;
+
+          if (!workEmailPattern.test(email)) {
+            emailError.classList.remove("d-none");
+            return;
+          }
+
+          emailError.classList.add("d-none");
+          nextStep(1);
+        };
+
+        const validateStep2 = () => {
+          let valid = true;
+
+          const fnameInput = document.getElementById("fname");
+          const lnameInput = document.getElementById("lname");
+          const messageInput = document.getElementById("message");
+
+          const fnameError = document.getElementById("fnameError");
+          const lnameError = document.getElementById("lnameError");
+          const messageError = document.getElementById("messageError");
+
+          if (!fnameInput || !lnameInput || !messageInput) return;
+
+          const fname = fnameInput.value.trim();
+          const lname = lnameInput.value.trim();
+          const message = messageInput.value.trim();
+
+          if (!fname) { fnameError.classList.remove("d-none"); valid = false; }
+          else fnameError.classList.add("d-none");
+
+          if (!lname) { lnameError.classList.remove("d-none"); valid = false; }
+          else lnameError.classList.add("d-none");
+
+          if (!message) { messageError.classList.remove("d-none"); valid = false; }
+          else messageError.classList.add("d-none");
+
+          if (!valid) return;
+
+          const emailInput = document.getElementById("email");
+          const countrySelect = document.getElementById("country");
+          const extraInput = document.getElementById("extra");
+
+          fetch("/api/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: emailInput?.value.trim() || "",
+              country: countrySelect?.value.trim() || "",
+              fname,
+              lname,
+              message,
+              extra: extraInput?.value.trim() || ""
+            })
+          }).then(() => nextStep(2));
+        };
+
+        const priority = [
+          "United States",
+          "United Kingdom",
+          "Taiwan",
+          "Singapore",
+          "China"
+        ];
+
+        fetch("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json")
+          .then(res => res.json())
+          .then((data) => {
+            const select = document.getElementById("country");
+            if (!select) return;
+
+            const allNames = data.map(c => c.name).sort();
+
+            const finalList = [
+              ...priority,
+              ...allNames.filter(n => !priority.includes(n))
+            ];
+
+            finalList.forEach(name => {
+              const opt = document.createElement("option");
+              opt.value = name;
+              opt.textContent = name;
+              if (name === "United States") opt.selected = true;
+              select.appendChild(opt);
+            });
+          });
+
+        window.validateStep1 = validateStep1;
+        window.validateStep2 = validateStep2;
+
+      });
+    </script>
+  </Fragment>
+
+</Layout>
+
+<style>
+  .contact-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .mb-3 { margin-bottom: 1rem; }
+  .form-label { display: block; margin-bottom: 0.4rem; font-weight: 500; }
+
+  .form-control,
+  .form-select {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  .form-control::placeholder {
+    color: #999;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  .btn-dark { background: #000; color: #fff; }
+  .d-none { display: none; }
+
+  .error {
+    color: #c00;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+  }
+
+  .row { display: flex; gap: 1rem; }
+  .col-md-6 { flex: 1; }
+
+  .text-muted { color: #777; }
+  .small { font-size: 0.85rem; }
+  .text-decoration-underline { text-decoration: underline; }
+  .mt-4 { margin-top: 1.5rem; }
+</style>

@@ -1,0 +1,61 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="theitserver.org">
+
+  <section class="hero">
+    <h1>Website under development</h1>
+
+    <p>
+      We'll be back soon. Thank you for your patience.
+    </p>
+  </section>
+
+</Layout>
+
+<style>
+  .hero {
+    padding: 4rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    opacity: 0.85;
+    max-width: 700px;
+  }
+
+  /* Tablet */
+  @media (max-width: 1023px) {
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+    .hero p {
+      font-size: 1.15rem;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .hero {
+      padding: 3rem 1rem;
+    }
+    .hero h1 {
+      font-size: 1.9rem;
+    }
+    .hero p {
+      font-size: 1.05rem;
+    }
+  }
+</style>
