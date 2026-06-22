@@ -1,7 +1,7 @@
 # build output
 dist/
 
-# generated types
+# generated types and Astro internals
 .astro/
 
 # dependencies
@@ -15,10 +15,23 @@ pnpm-debug.log*
 
 # environment variables
 .env
+.env.*
 .env.production
 
 # macOS-specific files
 .DS_Store
 
-# jetbrains setting folder
+# JetBrains IDE settings
 .idea/
+
+# VS Code settings
+.vscode/
+
+# Cloudflare Wrangler local state (never commit)
+.wrangler/
+
+# Astro accidental generated folder (sometimes appears)
+astro/
+
+# accidental build file (if created)
+build
