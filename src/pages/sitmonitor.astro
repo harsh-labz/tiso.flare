@@ -1,0 +1,96 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout showHeader={false} title="SitMonitor™ the IT Server Markets">
+
+  <!-- Remove layout spacing globally for this page -->
+  <style is:global>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .site-main {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .site-main .container {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  </style>
+
+  <!-- Clean, brand-neutral header -->
+  <header class="sm-header">
+    <div class="sm-title">SitMonitor™ the IT Server Markets</div>
+
+    <nav class="sm-nav">
+      <a class="sm-btn sm-primary" href="#">Get Started</a>
+      <a class="sm-btn sm-secondary" href="#">Login</a>
+    </nav>
+  </header>
+
+  <!-- Blank Body -->
+  <section class="sm-body">
+    <p>This page is intentionally left blank for now.</p>
+  </section>
+
+  <!-- Scoped CSS -->
+  <style>
+    /* Header container */
+    .sm-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 74px; /* proportional to Investopedia */
+      padding: 0 1.75rem;
+      border-bottom: 2px solid #dcdcdc;
+      background: #ffffff;
+    }
+
+    /* Title — proportional scale */
+    .sm-title {
+      font-size: 1.55rem; /* proportional to button size */
+      font-weight: 600;
+      color: #222;
+      margin: 0;
+      line-height: 1;
+    }
+
+    /* Navigation */
+    .sm-nav {
+      display: flex;
+      gap: 0.9rem;
+    }
+
+    /* Buttons — proportional scale */
+    .sm-btn {
+      padding: 0.65rem 1.25rem;
+      font-size: 1.05rem; /* matches Investopedia ratio */
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .sm-primary {
+      background: #0066cc;
+      color: #fff;
+    }
+
+    .sm-secondary {
+      background: #f3f3f3;
+      color: #333;
+    }
+
+    /* Body — proportional scale */
+    .sm-body {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      font-size: 1.25rem;
+      color: #444;
+    }
+  </style>
+
+</Layout>

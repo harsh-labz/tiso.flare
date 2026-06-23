@@ -6,6 +6,8 @@ const nav = [
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" }
 ];
+
+const { showHeader = true } = Astro.props;
 ---
 
 <html lang="en">
@@ -21,19 +23,21 @@ const nav = [
   </head>
 
   <body>
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="logo" href="/">theitserver.org</a>
+    {showHeader && (
+      <header class="site-header">
+        <div class="container header-inner">
+          <a class="logo" href="/">theitserver.org</a>
 
-        <nav class="nav" aria-label="Main Navigation">
-          <ul>
-            {nav.map((item) => (
-              <li><a href={item.href}>{item.name}</a></li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </header>
+          <nav class="nav" aria-label="Main Navigation">
+            <ul>
+              {nav.map((item) => (
+                <li><a href={item.href}>{item.name}</a></li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </header>
+    )}
 
     <main class="site-main">
       <slot />
@@ -44,6 +48,7 @@ const nav = [
         <p>© {new Date().getFullYear()} theitserver.org — All Rights Reserved.</p>
       </div>
     </footer>
+
     <slot name="scripts" />
   </body>
 </html>
