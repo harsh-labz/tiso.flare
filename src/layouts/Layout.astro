@@ -15,7 +15,6 @@ const { showHeader = true } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Prevent mobile browsers from caching old HTML -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -26,14 +25,77 @@ const { showHeader = true } = Astro.props;
     <link rel="stylesheet" href="/styles/mobile.css" />
     <link rel="stylesheet" href="/styles/tablet.css" />
     <link rel="stylesheet" href="/styles/desktop.css" />
+
+    <style>
+      @media (min-width: 1024px) {
+
+        header.site-header {
+          height: 62px !important;
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #eee;
+        }
+
+        /* ⭐ FIX: Remove container restrictions inside header */
+        header.site-header .container {
+          max-width: none !important;
+          width: 100% !important;
+          padding: 0 !important;
+        }
+
+        /* ⭐ YOUR EXACT BLOCK — LEFT LOGO, RIGHT NAV */
+        header.site-header .container.header-inner {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;     /* ⭐ LEFT + RIGHT */
+          padding: 0 1.25rem !important;
+          gap: 1.25rem !important;
+        }
+
+        header.site-header .logo {
+          font-size: 1.15rem !important;
+          font-weight: 600;
+          line-height: 1;
+        }
+
+        /* ⭐ RIGHT NAVIGATION (VISIBLE AGAIN) */
+        header.site-header nav.nav ul {
+          display: flex;
+          gap: 1.25rem !important;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        header.site-header nav.nav a {
+          font-size: 0.92rem !important;
+          padding: 0.2rem 0 !important;
+          line-height: 1;
+          text-decoration: none;
+        }
+
+        .site-main {
+          padding-top: 0 !important;
+        }
+
+        .site-footer {
+          padding: 0.4rem 0 !important;
+          font-size: 0.82rem;
+        }
+      }
+    </style>
   </head>
 
   <body>
     {showHeader && (
       <header class="site-header">
         <div class="container header-inner">
+
+          <!-- ⭐ LEFT SIDE -->
           <a class="logo" href="/">theitserver.org</a>
 
+          <!-- ⭐ RIGHT SIDE -->
           <nav class="nav" aria-label="Main Navigation">
             <ul>
               {nav.map((item) => (
@@ -41,6 +103,7 @@ const { showHeader = true } = Astro.props;
               ))}
             </ul>
           </nav>
+
         </div>
       </header>
     )}

@@ -39,20 +39,20 @@ import Layout from "../layouts/Layout.astro";
 
   <!-- Scoped CSS -->
   <style>
-    /* Header container */
+    /* Header container — tightened vertically */
     .sm-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 74px; /* proportional to Investopedia */
-      padding: 0 1.75rem;
+      height: 62px; /* reduced from 74px */
+      padding: 0 1.25rem; /* reduced horizontal padding */
       border-bottom: 2px solid #dcdcdc;
       background: #ffffff;
     }
 
     /* Title — proportional scale */
     .sm-title {
-      font-size: 1.55rem; /* proportional to button size */
+      font-size: 1.45rem; /* slightly reduced */
       font-weight: 600;
       color: #222;
       margin: 0;
@@ -62,13 +62,13 @@ import Layout from "../layouts/Layout.astro";
     /* Navigation */
     .sm-nav {
       display: flex;
-      gap: 0.9rem;
+      gap: 0.65rem; /* reduced gap */
     }
 
-    /* Buttons — proportional scale */
+    /* Buttons — tightened */
     .sm-btn {
-      padding: 0.65rem 1.25rem;
-      font-size: 1.05rem; /* matches Investopedia ratio */
+      padding: 0.55rem 1rem; /* reduced padding */
+      font-size: 0.98rem; /* slightly smaller */
       border-radius: 4px;
       text-decoration: none;
       font-weight: 500;
@@ -84,11 +84,11 @@ import Layout from "../layouts/Layout.astro";
       color: #333;
     }
 
-    /* Body — proportional scale */
+    /* Body — tightened */
     .sm-body {
-      padding: 3rem 1.5rem;
+      padding: 2.25rem 1.25rem; /* reduced from 3rem */
       text-align: center;
-      font-size: 1.25rem;
+      font-size: 1.15rem; /* slightly smaller */
       color: #444;
     }
   </style>
