@@ -1,10 +1,235 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+// Example list of 10 items
+const items = [
+  { title: "Server OEM Earnings Beat Expectations", date: "2024-06-01", snippet: "Strong hyperscaler demand lifts quarterly revenue.", link: "/trajectory/1" },
+  { title: "Major Capex Expansion Announced by Hyperscaler", date: "2024-06-02", snippet: "New datacenter buildouts planned across APAC.", link: "/trajectory/2" },
+  { title: "Export Controls Tightened on AI Chips", date: "2024-06-03", snippet: "Regulatory shifts impact GPU shipments globally.", link: "/trajectory/3" },
+  { title: "Supply Chain Disruption Hits ODM Manufacturers", date: "2024-06-04", snippet: "Component shortages delay server deliveries.", link: "/trajectory/4" },
+  { title: "Next‑Gen CPU Product Launch Announced", date: "2024-06-05", snippet: "New architecture promises major performance gains.", link: "/trajectory/5" },
+  { title: "M&A Deal Reshapes Server Market Landscape", date: "2024-06-06", snippet: "Two major OEMs announce strategic merger.", link: "/trajectory/6" },
+  { title: "Geopolitical Shock Impacts Semiconductor Supply", date: "2024-06-07", snippet: "Regional tensions disrupt logistics routes.", link: "/trajectory/7" },
+  { title: "Hyperscaler Announces New Datacenter Region", date: "2024-06-08", snippet: "Expansion targets high‑growth emerging markets.", link: "/trajectory/8" },
+  { title: "Quarterly Server Shipment Data Released", date: "2024-06-09", snippet: "Market shows mixed signals across segments.", link: "/trajectory/9" },
+  { title: "AI Infrastructure Demand Surges", date: "2024-06-10", snippet: "GPU‑dense servers see record orders.", link: "/trajectory/10" }
+];
 ---
 
 <Layout title="Trajectories">
-  <section style="padding: 4rem 2rem; text-align: center;">
-    <h1>Trajectories</h1>
-    <p>This page is intentionally left blank for now.</p>
-  </section>
+  <div class="holy-grail">
+
+    <!-- HEADER -->
+    <header class="hg-header">
+      <h1>Trajectories</h1>
+    </header>
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="hg-sidebar-left">
+      <div class="left-holy-grail">
+
+        <!-- S1: Smaller Clear Button ABOVE Event Type -->
+        <button class="clear-btn" id="clearFilters">Clear</button>
+
+        <main class="left-main">
+
+          <!-- Event Type -->
+          <details class="filter-details" open>
+            <summary>
+              Event Type (<span id="eventCount">0</span>)
+            </summary>
+            <div class="filter-group">
+              <label><input type="checkbox" class="event-filter" /> Earnings Releases</label>
+              <label><input type="checkbox" class="event-filter" /> Capex Announcements</label>
+              <label><input type="checkbox" class="event-filter" /> Export Controls & Regulation</label>
+              <label><input type="checkbox" class="event-filter" /> Supply Chain Disruptions</label>
+              <label><input type="checkbox" class="event-filter" /> Product Launches</label>
+              <label><input type="checkbox" class="event-filter" /> M&A / Restructuring</label>
+              <label><input type="checkbox" class="event-filter" /> Geopolitical Shocks</label>
+              <label><input type="checkbox" class="event-filter" /> Data Center Buildouts</label>
+            </div>
+          </details>
+
+          <!-- Periodicals -->
+          <details class="filter-details">
+            <summary>
+              Periodicals (<span id="periodicalCount">0</span>)
+            </summary>
+            <div class="filter-group">
+              <label><input type="checkbox" class="periodical-filter" /> Weekly</label>
+              <label><input type="checkbox" class="periodical-filter" /> Monthly</label>
+              <label><input type="checkbox" class="periodical-filter" /> Quarterly</label>
+            </div>
+          </details>
+
+        </main>
+
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="hg-main">
+      <div class="trajectory-list">
+        {items.map((item) => (
+          <article class="trajectory-card">
+            <a href={item.link}>
+              <h2>{item.title}</h2>
+            </a>
+            <p class="date">{item.date}</p>
+            <p>{item.snippet}</p>
+          </article>
+        ))}
+      </div>
+    </main>
+
+    <!-- RIGHT SIDEBAR WITH LONG VERTICAL AD CAROUSEL (S2) -->
+    <aside class="hg-sidebar-right">
+      <div class="ad-carousel">
+        <div class="ad-slide">ad goes here</div>
+        <div class="ad-slide">ad goes here</div>
+        <div class="ad-slide">ad goes here</div>
+      </div>
+    </aside>
+
+    <!-- FOOTER -->
+    <footer class="hg-footer">
+      <p>© theitserver.org</p>
+    </footer>
+
+  </div>
+
+  <style>
+    /* HOLY GRAIL LAYOUT */
+    .holy-grail {
+      display: grid;
+      grid-template-areas:
+        "header header header"
+        "left main right"
+        "footer footer footer";
+      grid-template-columns: 200px 1fr 200px;
+      min-height: 100vh;
+      gap: 1rem;
+    }
+
+    .hg-header { grid-area: header; padding: 1rem; }
+
+    /* LEFT SIDEBAR */
+    .hg-sidebar-left {
+      grid-area: left;
+      background: #f7f7f7;
+      padding: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .clear-btn {
+      width: 80px;
+      padding: 0.3rem 0.4rem;
+      font-size: 0.75rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin: 0.5rem 0 1rem 0;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    /* MAIN CONTENT */
+    .hg-main { grid-area: main; padding: 0; }
+
+    .trajectory-card {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* RIGHT SIDEBAR AD CAROUSEL */
+    .hg-sidebar-right {
+      grid-area: right;
+      padding: 0;
+      background: #f7f7f7;
+      overflow: hidden;
+    }
+
+    .ad-carousel {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      animation: scrollAds 12s linear infinite;
+    }
+
+    .ad-slide {
+      height: 200px;
+      background: #eaeaea;
+      margin: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    @keyframes scrollAds {
+      0% { transform: translateY(0); }
+      33% { transform: translateY(-200px); }
+      66% { transform: translateY(-400px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* FOOTER */
+    .hg-footer {
+      grid-area: footer;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .holy-grail {
+        grid-template-areas:
+          "header"
+          "main"
+          "left"
+          "right"
+          "footer";
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <script>
+    // Count logic for Event Type and Periodicals
+    const eventBoxes = document.querySelectorAll(".event-filter");
+    const periodicalBoxes = document.querySelectorAll(".periodical-filter");
+    const eventCountSpan = document.getElementById("eventCount");
+    const periodicalCountSpan = document.getElementById("periodicalCount");
+    const clearBtn = document.getElementById("clearFilters");
+    const detailsList = document.querySelectorAll(".filter-details");
+
+    function updateCounts() {
+      eventCountSpan.textContent = [...eventBoxes].filter(cb => cb.checked).length;
+      periodicalCountSpan.textContent = [...periodicalBoxes].filter(cb => cb.checked).length;
+    }
+
+    eventBoxes.forEach(cb => cb.addEventListener("change", updateCounts));
+    periodicalBoxes.forEach(cb => cb.addEventListener("change", updateCounts));
+
+    clearBtn.onclick = () => {
+      [...eventBoxes, ...periodicalBoxes].forEach(cb => cb.checked = false);
+      updateCounts();
+    };
+
+    // Auto-close dropdowns when clicking outside
+    document.addEventListener("click", (e) => {
+      detailsList.forEach((det) => {
+        if (!det.contains(e.target)) det.open = false;
+      });
+    });
+  </script>
 </Layout>
