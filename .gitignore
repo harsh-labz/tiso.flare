@@ -34,4 +34,4 @@ pnpm-debug.log*
 astro/
 
 # accidental build file (if created)
-build
+build.dev.vars
